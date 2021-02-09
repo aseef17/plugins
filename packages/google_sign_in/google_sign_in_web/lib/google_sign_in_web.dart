@@ -134,7 +134,7 @@ class GoogleSignInPlugin extends GoogleSignInPlatform {
       final var response = await auth2.getAuthInstance().grantOfflineAccess();
       console.log('## grantOfflineAccess');
       console.log(response);
-      return gapiUserToPluginUserData(currentUser);
+      return gapiUserToPluginUserData(currentUser, 'TEST');
     } on auth2.GoogleAuthSignInError catch (reason) {
       throw PlatformException(
         code: reason.error,
