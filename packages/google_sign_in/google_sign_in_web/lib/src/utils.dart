@@ -32,7 +32,7 @@ Future<void> injectJSLibraries(List<String> libraries,
 /// Utility method that converts `currentUser` to the equivalent
 /// [GoogleSignInUserData].
 /// This method returns `null` when the [currentUser] is not signed in.
-GoogleSignInUserData gapiUserToPluginUserData(auth2.GoogleUser currentUser, String accessToken = '') {
+GoogleSignInUserData gapiUserToPluginUserData(auth2.GoogleUser currentUser, [String accessToken = '']) {
   final bool isSignedIn = currentUser?.isSignedIn() ?? false;
   final auth2.BasicProfile profile = currentUser?.getBasicProfile();
   if (!isSignedIn || profile?.getId() == null) {
