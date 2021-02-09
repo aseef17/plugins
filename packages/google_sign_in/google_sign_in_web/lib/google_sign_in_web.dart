@@ -3,6 +3,7 @@
 // found in the LICENSE file.
 
 import 'dart:async';
+import 'dart:convert';
 import 'dart:html' as html;
 
 import 'package:flutter/services.dart';
@@ -132,7 +133,7 @@ class GoogleSignInPlugin extends GoogleSignInPlatform {
     try {
       final auth2.GoogleUser currentUser = await auth2.getAuthInstance().signIn();
       final response = await auth2.getAuthInstance().grantOfflineAccess();
-      return gapiUserToPluginUserData(currentUser, response);
+      return gapiUserToPluginUserData(currentUser, jsonDecode(response)['code']);
     } on auth2.GoogleAuthSignInError catch (reason) {
       throw PlatformException(
         code: reason.error,
