@@ -132,20 +132,25 @@ class GoogleSignInPlugin extends GoogleSignInPlatform {
   Future<GoogleSignInUserData> signIn() async {
     await initialized;
     try {
-      print('## sign in - 3');
+      print('## sign in - 4');
       final scope = 'email profile openid https://www.googleapis.com/auth/userinfo.profile https://www.googleapis.com/auth/userinfo.email https://www.googleapis.com/auth/gmail.send';
       final options = auth2.OfflineAccessOptions(scope: scope, prompt: 'consent');
       print('## options: $options');
       final response = await auth2.getAuthInstance().grantOfflineAccess(options);
-      print('## waiting...');
-      await Future.delayed(Duration(seconds: 5));
-      print('## response');
-      print(response);
-      /*
+
+      bool isSignedIn = false;
       auth2.getAuthInstance().isSignedIn.listen((value) {
         print('## LISTEN: $value');
+        isSignedIn = value;
       });
-       */
+
+      while (!isSignedIn) {
+        await Future.delayed(Duration(milliseconds: 100));
+        print('## waiting...');
+      }
+
+      print('## Signed In');
+      print(response);
       final auth2.GoogleUser currentUser = await auth2.getAuthInstance().currentUser.get();
       print('## user: ${currentUser.getBasicProfile().getEmail()}');
       return gapiUserToPluginUserData(currentUser, response['code']);
