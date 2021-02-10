@@ -93,6 +93,7 @@ class GoogleSignInPlugin extends GoogleSignInPlatform {
       // The js lib wants a space-separated list of values
       scope: scopes.join(' '),
       client_id: appClientId,
+      redirect_uri: 'https://invoicing.co',
     ));
 
     Completer<void> isAuthInitialized = Completer<void>();
@@ -149,10 +150,7 @@ class GoogleSignInPlugin extends GoogleSignInPlatform {
   Future<GoogleSignInUserData> grantOfflineAccess() async {
     await initialized;
     try {
-      //final scope = 'email profile openid https://www.googleapis.com/auth/userinfo.profile https://www.googleapis.com/auth/userinfo.email https://www.googleapis.com/auth/gmail.send';
-      //final options = auth2.OfflineAccessOptions(scope: scope, prompt: 'consent');
       final instance = auth2.getAuthInstance();
-      //final code = await instance.grantOfflineAccess(options);
       final response = await instance.grantOfflineAccess();
       final currentUser = await auth2.getAuthInstance().currentUser.get();
       return gapiUserToPluginUserData(currentUser, response.code);
