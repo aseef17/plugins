@@ -97,7 +97,7 @@ abstract class GoogleSignInPlatform {
   }
 
   /// Signs in the user with the options specified to [init].
-  Future<GoogleSignInUserData> grantOfflineAccess() async {
+  Future<String> grantOfflineAccess() async {
     throw UnimplementedError('grantOfflineAccess() has not been implemented.');
   }
 
