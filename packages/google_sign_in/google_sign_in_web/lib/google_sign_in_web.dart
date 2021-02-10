@@ -132,7 +132,6 @@ class GoogleSignInPlugin extends GoogleSignInPlatform {
   Future<GoogleSignInUserData> signIn() async {
     await initialized;
     try {
-      print('## signIn');
       final auth2.GoogleUser currentUser = await auth2.getAuthInstance().signIn();
       return gapiUserToPluginUserData(currentUser);
     } on auth2.GoogleAuthSignInError catch (reason) {
