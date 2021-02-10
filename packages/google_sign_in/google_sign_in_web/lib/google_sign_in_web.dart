@@ -3,9 +3,7 @@
 // found in the LICENSE file.
 
 import 'dart:async';
-import 'dart:convert';
 import 'dart:html' as html;
-import 'dart:io';
 
 import 'package:flutter/services.dart';
 import 'package:google_sign_in_platform_interface/google_sign_in_platform_interface.dart';
