@@ -68,7 +68,6 @@ class GoogleAuth {
 abstract class _GoogleAuth {
   external Promise<GoogleUser> signIn(
       [dynamic /*SigninOptions|SigninOptionsBuilder*/ options]);
-
   external Promise<dynamic /*{code: string}*/ > grantOfflineAccess(
       [OfflineAccessOptions options]);
 }
