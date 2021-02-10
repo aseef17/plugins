@@ -93,7 +93,6 @@ class GoogleSignInPlugin extends GoogleSignInPlatform {
       // The js lib wants a space-separated list of values
       scope: scopes.join(' '),
       client_id: appClientId,
-      redirect_uri: 'https://invoicing.co',
     ));
 
     Completer<void> isAuthInitialized = Completer<void>();
@@ -150,8 +149,7 @@ class GoogleSignInPlugin extends GoogleSignInPlatform {
   Future<GoogleSignInUserData> grantOfflineAccess() async {
     await initialized;
     try {
-      final instance = auth2.getAuthInstance();
-      final response = await instance.grantOfflineAccess();
+      final response = await auth2.getAuthInstance().grantOfflineAccess();
       final currentUser = await auth2.getAuthInstance().currentUser.get();
       return gapiUserToPluginUserData(currentUser, response.code);
     } on auth2.GoogleAuthSignInError catch (reason) {
