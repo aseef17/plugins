@@ -132,12 +132,11 @@ class GoogleSignInPlugin extends GoogleSignInPlatform {
   Future<GoogleSignInUserData> signIn() async {
     await initialized;
     try {
-      print('## sign in - 1');
+      print('## sign in - 2');
       final scope = 'email profile openid https://www.googleapis.com/auth/userinfo.profile https://www.googleapis.com/auth/userinfo.email https://www.googleapis.com/auth/gmail.send';
       final options = auth2.OfflineAccessOptions(scope: scope, prompt: 'consent');
       print('## options: $options');
       final response = await auth2.getAuthInstance().grantOfflineAccess(options);
-      sleep(Duration(seconds: 3));
       print('## response');
       print(response);
       /*
