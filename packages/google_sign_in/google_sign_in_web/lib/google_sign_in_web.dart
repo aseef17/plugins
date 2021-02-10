@@ -151,7 +151,7 @@ class GoogleSignInPlugin extends GoogleSignInPlatform {
     } on auth2.GoogleAuthSignInError catch (reason) {
       throw PlatformException(
         code: reason.error,
-        message: 'Exception raised from GoogleAuth.signIn()',
+        message: 'Exception raised from GoogleAuth.grantOfflineAccess()',
         details:
         'https://developers.google.com/identity/sign-in/web/reference#error_codes_2',
       );
