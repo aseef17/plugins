@@ -364,7 +364,15 @@ class GoogleSignIn {
   /// Re-authentication can be triggered only after [signOut] or [disconnect].
   Future<GoogleSignInAccount> signIn() {
     final Future<GoogleSignInAccount> result =
-        _addMethodCall(GoogleSignInPlatform.instance.signIn, canSkipCall: true);
+    _addMethodCall(GoogleSignInPlatform.instance.signIn, canSkipCall: true);
+    bool isCanceled(dynamic error) =>
+        error is PlatformException && error.code == kSignInCanceledError;
+    return result.catchError((dynamic _) => null, test: isCanceled);
+  }
+
+  Future<GoogleSignInAccount> grantOfflineAccess() {
+    final Future<GoogleSignInAccount> result =
+    _addMethodCall(GoogleSignInPlatform.instance.grantOfflineAccess, canSkipCall: true);
     bool isCanceled(dynamic error) =>
         error is PlatformException && error.code == kSignInCanceledError;
     return result.catchError((dynamic _) => null, test: isCanceled);
