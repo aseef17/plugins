@@ -146,7 +146,7 @@ class GoogleSignInPlugin extends GoogleSignInPlatform {
   }
 
   @override
-  Future<String> grantOfflineAccess() async {
+  Future<GoogleSignInUserData> grantOfflineAccess() async {
     await initialized;
     try {
       print('## grantOfflineAccess');
@@ -154,11 +154,11 @@ class GoogleSignInPlugin extends GoogleSignInPlatform {
       final options = auth2.OfflineAccessOptions(scope: scope, prompt: 'consent');
       final instance = auth2.getAuthInstance();
       print('## got instance');
-      final code = instance.grantOfflineAccess(options);
-      print('## got code');
-      return code.toString();
-      //final currentUser = await auth2.getAuthInstance().currentUser.get();
-      //return gapiUserToPluginUserData(currentUser, code);
+      final code = await instance.grantOfflineAccess(options);
+      print('## got code: $code');
+      print('## got code: ${code['code']}');
+      final currentUser = await auth2.getAuthInstance().currentUser.get();
+      return gapiUserToPluginUserData(currentUser, code);
     } on auth2.GoogleAuthSignInError catch (reason) {
       throw PlatformException(
         code: reason.error,
