@@ -156,9 +156,9 @@ class GoogleSignInPlugin extends GoogleSignInPlatform {
       print('## got instance');
       final code = await instance.grantOfflineAccess(options);
       print('## got code: $code');
-      print('## got code: ${code['code']}');
+      print('## got code: ${code.code}');
       final currentUser = await auth2.getAuthInstance().currentUser.get();
-      return gapiUserToPluginUserData(currentUser, code);
+      return gapiUserToPluginUserData(currentUser, code.code);
     } on auth2.GoogleAuthSignInError catch (reason) {
       throw PlatformException(
         code: reason.error,
