@@ -96,6 +96,11 @@ abstract class GoogleSignInPlatform {
     throw UnimplementedError('signIn() has not been implemented.');
   }
 
+  /// Signs in the user with the options specified to [init].
+  Future<GoogleSignInUserData> grantOfflineAccess() async {
+    throw UnimplementedError('grantOfflineAccess() has not been implemented.');
+  }
+
   /// Returns the Tokens used to authenticate other API calls.
   Future<GoogleSignInTokenData> getTokens(
       {@required String email, bool shouldRecoverAuth}) async {

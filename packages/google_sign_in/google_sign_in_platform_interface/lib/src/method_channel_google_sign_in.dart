@@ -47,6 +47,13 @@ class MethodChannelGoogleSignIn extends GoogleSignInPlatform {
   }
 
   @override
+  Future<GoogleSignInUserData> grantOfflineAccess() {
+    return channel
+        .invokeMapMethod<String, dynamic>('grantOfflineAccess')
+        .then(getUserDataFromMap);
+  }
+
+  @override
   Future<GoogleSignInTokenData> getTokens(
       {String email, bool shouldRecoverAuth = true}) {
     return channel

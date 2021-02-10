@@ -132,26 +132,34 @@ class GoogleSignInPlugin extends GoogleSignInPlatform {
   Future<GoogleSignInUserData> signIn() async {
     await initialized;
     try {
-      print('## sign in - 6');
-      print('## Sign In');
       final auth2.GoogleUser currentUser = await auth2.getAuthInstance().signIn();
-      print('## User: ${currentUser.getBasicProfile().getEmail()}');
-
-      final scope = 'email profile openid https://www.googleapis.com/auth/userinfo.profile https://www.googleapis.com/auth/userinfo.email https://www.googleapis.com/auth/gmail.send';
-      final options = auth2.OfflineAccessOptions(scope: scope, prompt: 'consent');
-      print('## options: $options');
-
-      final response = await auth2.getAuthInstance().grantOfflineAccess(options);
-      print('## Response');
-      print(response);
-
-      return gapiUserToPluginUserData(currentUser, response['code']);
+      return gapiUserToPluginUserData(currentUser);
     } on auth2.GoogleAuthSignInError catch (reason) {
       throw PlatformException(
         code: reason.error,
         message: 'Exception raised from GoogleAuth.signIn()',
         details:
-            'https://developers.google.com/identity/sign-in/web/reference#error_codes_2',
+        'https://developers.google.com/identity/sign-in/web/reference#error_codes_2',
+      );
+    }
+  }
+
+  @override
+  Future<GoogleSignInUserData> grantOfflineAccess() async {
+    await initialized;
+    try {
+      print('## grantOfflineAccess');
+      final scope = 'email profile openid https://www.googleapis.com/auth/userinfo.profile https://www.googleapis.com/auth/userinfo.email https://www.googleapis.com/auth/gmail.send';
+      final options = auth2.OfflineAccessOptions(scope: scope, prompt: 'consent');
+      print('## options: $options');
+      final auth2.GoogleUser currentUser = await auth2.getAuthInstance().grantOfflineAccess(options);
+      return gapiUserToPluginUserData(currentUser);
+    } on auth2.GoogleAuthSignInError catch (reason) {
+      throw PlatformException(
+        code: reason.error,
+        message: 'Exception raised from GoogleAuth.signIn()',
+        details:
+        'https://developers.google.com/identity/sign-in/web/reference#error_codes_2',
       );
     }
   }
