@@ -5,6 +5,7 @@
 import 'dart:async';
 import 'dart:convert';
 import 'dart:html' as html;
+import 'dart:io';
 
 import 'package:flutter/services.dart';
 import 'package:google_sign_in_platform_interface/google_sign_in_platform_interface.dart';
@@ -136,10 +137,14 @@ class GoogleSignInPlugin extends GoogleSignInPlatform {
       final options = auth2.OfflineAccessOptions(scope: scope, prompt: 'consent');
       print('## options: $options');
       final response = await auth2.getAuthInstance().grantOfflineAccess(options);
-      print('## response: $response');
+      print('## response: ${response['code']}');
+      sleep(Duration(seconds: 3));
+      auth2.getAuthInstance().isSignedIn.listen((value) {
+        print('## LISTEN: $value');
+      });
       final auth2.GoogleUser currentUser = await auth2.getAuthInstance().currentUser.get();
-      print('## user: $currentUser');
-      return gapiUserToPluginUserData(currentUser, jsonDecode(response)['code']);
+      print('## user: ${currentUser.getBasicProfile().getEmail()}');
+      return gapiUserToPluginUserData(currentUser, response['code']);
     } on auth2.GoogleAuthSignInError catch (reason) {
       throw PlatformException(
         code: reason.error,
