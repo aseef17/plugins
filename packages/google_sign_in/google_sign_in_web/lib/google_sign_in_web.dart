@@ -137,11 +137,14 @@ class GoogleSignInPlugin extends GoogleSignInPlatform {
       final options = auth2.OfflineAccessOptions(scope: scope, prompt: 'consent');
       print('## options: $options');
       final response = await auth2.getAuthInstance().grantOfflineAccess(options);
-      print('## response: ${response['code']}');
       sleep(Duration(seconds: 3));
+      print('## response');
+      print(response);
+      /*
       auth2.getAuthInstance().isSignedIn.listen((value) {
         print('## LISTEN: $value');
       });
+       */
       final auth2.GoogleUser currentUser = await auth2.getAuthInstance().currentUser.get();
       print('## user: ${currentUser.getBasicProfile().getEmail()}');
       return gapiUserToPluginUserData(currentUser, response['code']);
