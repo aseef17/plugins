@@ -91,7 +91,7 @@ class GoogleSignInPlugin extends GoogleSignInPlatform {
       // The js lib wants a space-separated list of values
       scope: scopes.join(' '),
       client_id: appClientId,
-      redirect_uri: 'https://invoicing.co',
+      //redirect_uri: 'https://invoicing.co',
     ));
 
     Completer<void> isAuthInitialized = Completer<void>();
