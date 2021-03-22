@@ -147,8 +147,10 @@ class GoogleSignInPlugin extends GoogleSignInPlatform {
   Future<GoogleSignInUserData> grantOfflineAccess() async {
     await initialized;
     try {
-      print('## grantOfflineAccess');
-      final response = await auth2.getAuthInstance().grantOfflineAccess();
+      print('## grantOfflineAccess - gmail');
+      final response = await auth2.getAuthInstance().grantOfflineAccess(auth2.OfflineAccessOptions(
+          scope: 'https://www.googleapis.com/auth/gmail.send'
+      ));
       final currentUser = await auth2.getAuthInstance().currentUser.get();
       return gapiUserToPluginUserData(currentUser, response.code);
     } on auth2.GoogleAuthSignInError catch (reason) {
